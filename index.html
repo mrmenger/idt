@@ -3,82 +3,247 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Социальная сеть для мыслей и идей" />
-  <title>итд — мысли и идеи</title>
+  <title>итд.</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
-  <header class="header" id="header">
-    <div class="header__inner container">
-      <a href="/" class="logo">
-        <span class="logo__text">итд</span>
-        <span class="logo__dot">.</span>
-      </a>
+<!-- ════════════════════════════════════════════════════════
+     AUTH SCREENS
+════════════════════════════════════════════════════════ -->
+<div class="auth-screen" id="authScreen">
 
-      <nav class="nav">
-        <a href="#" class="nav__link nav__link--active">Лента</a>
-        <a href="#" class="nav__link">Популярное</a>
-        <a href="#" class="nav__link">Люди</a>
-      </nav>
+  <!-- Brand -->
+  <div class="auth-brand">
+    <span class="auth-brand__logo">итд<span class="dot">.</span></span>
+    <p class="auth-brand__tagline">Место для мыслей</p>
+  </div>
 
-      <div class="header__actions">
-        <button class="btn btn--primary" id="openModalBtn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"/>
-            <line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          Написать
-        </button>
-        <button class="avatar-btn" aria-label="Профиль" id="userAvatar">
-          МЫ
+  <!-- ── LOGIN PANEL ── -->
+  <div class="auth-panel" id="loginPanel">
+    <h2 class="auth-panel__title">Добро пожаловать</h2>
+    <p class="auth-panel__sub">Войдите в свой аккаунт</p>
+
+    <form class="auth-form" id="loginForm" novalidate>
+      <div class="field">
+        <label class="field__label" for="loginUsername">Логин</label>
+        <input class="field__input" id="loginUsername" type="text"
+               placeholder="your_login" autocomplete="username" />
+        <span class="field__error" id="loginUsernameErr"></span>
+      </div>
+
+      <div class="field">
+        <label class="field__label" for="loginPassword">Пароль</label>
+        <div class="field__pw-wrap">
+          <input class="field__input" id="loginPassword" type="password"
+                 placeholder="••••••••" autocomplete="current-password" />
+          <button type="button" class="pw-toggle" data-target="loginPassword"
+                  aria-label="Показать пароль">
+            <span class="pw-toggle__icon">👁</span>
+          </button>
+        </div>
+        <span class="field__error" id="loginPasswordErr"></span>
+      </div>
+
+      <span class="field__error auth-error" id="loginError"></span>
+
+      <button type="submit" class="btn btn--primary btn--full" id="loginBtn">
+        <span id="loginBtnText">Войти</span>
+        <span class="spinner hidden" id="loginSpinner"></span>
+      </button>
+    </form>
+
+    <p class="auth-switch">
+      Нет аккаунта?
+      <button class="auth-switch__btn" id="toRegister">Зарегистрироваться</button>
+    </p>
+  </div>
+
+  <!-- ── REGISTER PANEL ── -->
+  <div class="auth-panel hidden" id="registerPanel">
+    <h2 class="auth-panel__title">Создать аккаунт</h2>
+    <p class="auth-panel__sub">Это займёт меньше минуты</p>
+
+    <form class="auth-form" id="registerForm" novalidate>
+
+      <!-- Step 1: Avatar -->
+      <div class="reg-step" id="regStep1">
+        <p class="reg-step__label">Выберите аватар-эмодзи</p>
+
+        <!-- Emoji grid -->
+        <div class="emoji-grid" id="emojiGrid">
+          <!-- populated by JS -->
+        </div>
+
+        <!-- Selected preview -->
+        <div class="emoji-preview">
+          <div class="emoji-preview__avatar" id="previewAvatar">🙂</div>
+          <span class="emoji-preview__hint">Ваш аватар</span>
+        </div>
+
+        <!-- Color for avatar bg -->
+        <div class="avatar-colors">
+          <span class="avatar-colors__label">Фон:</span>
+          <div class="avatar-colors__swatches" id="avatarColorSwatches">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <button type="button" class="btn btn--primary btn--full" id="step1Next">
+          Далее →
         </button>
       </div>
+
+      <!-- Step 2: Credentials -->
+      <div class="reg-step hidden" id="regStep2">
+
+        <!-- Preview compact -->
+        <div class="reg-preview">
+          <div class="reg-preview__avatar" id="regPreviewAv">🙂</div>
+          <span class="reg-preview__change" id="backToStep1">Изменить</span>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="regName">Отображаемое имя</label>
+          <input class="field__input" id="regName" type="text"
+                 placeholder="Иван Иванов" maxlength="40"
+                 autocomplete="name" />
+          <span class="field__error" id="regNameErr"></span>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="regUsername">Логин</label>
+          <div class="field__prefix-wrap">
+            <span class="field__prefix">@</span>
+            <input class="field__input field__input--prefixed" id="regUsername"
+                   type="text" placeholder="ivan_ivanov" maxlength="20"
+                   autocomplete="username" />
+          </div>
+          <span class="field__hint">Только латинские буквы, цифры, _</span>
+          <span class="field__error" id="regUsernameErr"></span>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="regPassword">Пароль</label>
+          <div class="field__pw-wrap">
+            <input class="field__input" id="regPassword" type="password"
+                   placeholder="минимум 6 символов" maxlength="72"
+                   autocomplete="new-password" />
+            <button type="button" class="pw-toggle" data-target="regPassword"
+                    aria-label="Показать пароль">
+              <span class="pw-toggle__icon">👁</span>
+            </button>
+          </div>
+          <!-- strength bar -->
+          <div class="pw-strength" id="pwStrength">
+            <div class="pw-strength__bar" id="pwStrengthBar"></div>
+          </div>
+          <span class="pw-strength__label" id="pwStrengthLabel"></span>
+          <span class="field__error" id="regPasswordErr"></span>
+        </div>
+
+        <span class="field__error auth-error" id="registerError"></span>
+
+        <button type="submit" class="btn btn--primary btn--full" id="registerBtn">
+          <span id="registerBtnText">Создать аккаунт</span>
+          <span class="spinner hidden" id="registerSpinner"></span>
+        </button>
+      </div>
+
+    </form>
+
+    <p class="auth-switch">
+      Уже есть аккаунт?
+      <button class="auth-switch__btn" id="toLogin">Войти</button>
+    </p>
+  </div>
+
+</div><!-- /authScreen -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     APP SCREEN
+════════════════════════════════════════════════════════ -->
+<div class="app-screen hidden" id="appScreen">
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="header__inner container">
+
+      <a href="#" class="logo" id="goHome">
+        <span class="logo__text">итд</span><span class="logo__dot">.</span>
+      </a>
+
+      <nav class="nav" id="mainNav">
+        <button class="nav__link nav__link--active" data-page="feed">Лента</button>
+        <button class="nav__link" data-page="people">Люди</button>
+      </nav>
+
+      <div class="header__right">
+        <button class="btn btn--primary btn--sm" id="headerPostBtn">
+          + Написать
+        </button>
+        <!-- User menu -->
+        <div class="user-menu" id="userMenu">
+          <button class="user-menu__trigger" id="userMenuTrigger">
+            <div class="user-menu__avatar" id="headerAvatar">🙂</div>
+          </button>
+          <div class="user-menu__dropdown" id="userMenuDropdown">
+            <div class="user-menu__info">
+              <span class="user-menu__name" id="menuDisplayName">—</span>
+              <span class="user-menu__handle" id="menuHandle">—</span>
+            </div>
+            <div class="user-menu__divider"></div>
+            <button class="user-menu__item" id="logoutBtn">
+              🚪 Выйти
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </header>
 
-  <!-- ═══════════════════════════ MAIN ════════════════════════════ -->
+  <!-- MAIN -->
   <main class="main">
     <div class="container layout">
 
-      <!-- ─── Sidebar Left ─────────────────────────────────────────── -->
+      <!-- LEFT SIDEBAR -->
       <aside class="sidebar sidebar--left">
-        <div class="sidebar-card">
-          <div class="profile-mini">
-            <div class="profile-mini__avatar" style="background: #6C63FF">МЫ</div>
-            <div class="profile-mini__info">
-              <span class="profile-mini__name">Мой профиль</span>
-              <span class="profile-mini__handle">@me</span>
+        <div class="sidebar-card profile-card" id="sideProfile">
+          <div class="profile-card__avatar" id="sideAvatar">🙂</div>
+          <div class="profile-card__name" id="sideName">—</div>
+          <div class="profile-card__handle" id="sideHandle">—</div>
+          <div class="profile-card__stats">
+            <div class="profile-stat">
+              <span class="profile-stat__val" id="sidePostCount">0</span>
+              <span class="profile-stat__label">постов</span>
+            </div>
+            <div class="profile-stat">
+              <span class="profile-stat__val" id="sideFollowers">0</span>
+              <span class="profile-stat__label">читателей</span>
+            </div>
+            <div class="profile-stat">
+              <span class="profile-stat__val" id="sideFollowing">0</span>
+              <span class="profile-stat__label">подписок</span>
             </div>
           </div>
         </div>
 
         <nav class="side-nav">
-          <a href="#" class="side-nav__item side-nav__item--active">
+          <button class="side-nav__item side-nav__item--active" data-page="feed">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
               <polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
-            Главная
-          </a>
-          <a href="#" class="side-nav__item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-            </svg>
-            Избранное
-          </a>
-          <a href="#" class="side-nav__item">
+            Лента
+          </button>
+          <button class="side-nav__item" data-page="people">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
@@ -86,253 +251,148 @@
               <path d="M23 21v-2a4 4 0 00-3-3.87"/>
               <path d="M16 3.13a4 4 0 010 7.75"/>
             </svg>
-            Подписки
-          </a>
-          <a href="#" class="side-nav__item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-            </svg>
-            Поиск
-          </a>
+            Люди
+          </button>
         </nav>
 
-        <button class="btn btn--primary btn--full" id="openModalBtnSide">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"/>
-            <line x1="5" y1="12" x2="19" y2="12"/>
-          </svg>
-          Опубликовать
+        <button class="btn btn--primary btn--full" id="sidePostBtn">
+          + Опубликовать
         </button>
       </aside>
 
-      <!-- ─── Feed ──────────────────────────────────────────────────── -->
-      <section class="feed" id="feed">
+      <!-- FEED PAGE -->
+      <section class="page" id="feedPage">
 
         <!-- Quick compose -->
-        <div class="quick-compose">
-          <div class="quick-compose__avatar" style="background: #6C63FF" id="quickAvatar">МЫ</div>
-          <button class="quick-compose__trigger" id="quickComposeTrigger">
-            Что происходит?..
+        <div class="quick-compose" id="quickCompose">
+          <div class="quick-compose__avatar" id="quickAvatar">🙂</div>
+          <button class="quick-compose__input" id="quickTrigger">
+            Что у вас нового?..
           </button>
         </div>
 
-        <!-- Filter tabs -->
-        <div class="feed-tabs">
-          <button class="feed-tab feed-tab--active" data-tab="all">Все</button>
-          <button class="feed-tab" data-tab="popular">Популярные</button>
-          <button class="feed-tab" data-tab="new">Новые</button>
-        </div>
-
-        <!-- Skeleton loader -->
-        <div class="skeleton-wrapper" id="skeletonWrapper">
+        <!-- Skeletons -->
+        <div id="skeletons">
           <div class="skeleton-card">
-            <div class="skeleton skeleton--avatar"></div>
-            <div class="skeleton-card__content">
-              <div class="skeleton skeleton--line skeleton--short"></div>
-              <div class="skeleton skeleton--line"></div>
-              <div class="skeleton skeleton--line"></div>
-              <div class="skeleton skeleton--line skeleton--medium"></div>
+            <div class="skeleton sk-circle"></div>
+            <div class="sk-lines">
+              <div class="skeleton sk-line sk-short"></div>
+              <div class="skeleton sk-line"></div>
+              <div class="skeleton sk-line sk-med"></div>
             </div>
           </div>
           <div class="skeleton-card">
-            <div class="skeleton skeleton--avatar"></div>
-            <div class="skeleton-card__content">
-              <div class="skeleton skeleton--line skeleton--short"></div>
-              <div class="skeleton skeleton--line"></div>
-              <div class="skeleton skeleton--line skeleton--medium"></div>
+            <div class="skeleton sk-circle"></div>
+            <div class="sk-lines">
+              <div class="skeleton sk-line sk-short"></div>
+              <div class="skeleton sk-line"></div>
+              <div class="skeleton sk-line sk-med"></div>
             </div>
           </div>
         </div>
 
-        <!-- Posts container -->
-        <div class="posts-container" id="postsContainer"></div>
+        <!-- Posts -->
+        <div id="postsList"></div>
 
-        <!-- Empty state -->
-        <div class="empty-state hidden" id="emptyState">
+        <!-- Empty -->
+        <div class="empty-state hidden" id="feedEmpty">
           <div class="empty-state__icon">✍️</div>
-          <h3 class="empty-state__title">Пока пусто</h3>
-          <p class="empty-state__text">Будьте первым — поделитесь своей мыслью!</p>
-          <button class="btn btn--primary" id="emptyStateBtn">Написать пост</button>
-        </div>
-
-        <!-- Error state -->
-        <div class="error-state hidden" id="errorState">
-          <div class="error-state__icon">⚡</div>
-          <h3 class="error-state__title">Не удалось загрузить посты</h3>
-          <p class="error-state__text">Проверьте соединение и попробуйте снова</p>
-          <button class="btn btn--outline" id="retryBtn">Попробовать снова</button>
+          <h3>Пока пусто</h3>
+          <p>Станьте первым — поделитесь своей мыслью!</p>
+          <button class="btn btn--primary" id="emptyPostBtn">Написать</button>
         </div>
 
       </section>
 
-      <!-- ─── Sidebar Right ─────────────────────────────────────────── -->
+      <!-- PEOPLE PAGE -->
+      <section class="page hidden" id="peoplePage">
+        <div class="people-header">
+          <h2 class="people-header__title">Люди</h2>
+          <input class="people-search" id="peopleSearch"
+                 type="text" placeholder="🔍  Поиск..." />
+        </div>
+
+        <div id="peopleList"></div>
+
+        <div class="empty-state hidden" id="peopleEmpty">
+          <div class="empty-state__icon">👥</div>
+          <h3>Никого нет</h3>
+          <p>Пока вы единственный пользователь</p>
+        </div>
+      </section>
+
+      <!-- RIGHT SIDEBAR -->
       <aside class="sidebar sidebar--right">
         <div class="sidebar-card">
-          <h3 class="sidebar-card__title">Статистика</h3>
-          <div class="stats-grid">
-            <div class="stat-item">
-              <span class="stat-item__value" id="statTotal">—</span>
-              <span class="stat-item__label">Постов</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-item__value" id="statLikes">—</span>
-              <span class="stat-item__label">Лайков</span>
-            </div>
+          <h3 class="sidebar-card__title">Моя статистика</h3>
+          <div class="stat-row">
+            <span class="stat-row__label">Постов</span>
+            <span class="stat-row__val" id="myPostCount">0</span>
           </div>
-        </div>
-
-        <div class="sidebar-card">
-          <h3 class="sidebar-card__title">Trending</h3>
-          <ul class="trending-list">
-            <li class="trending-item">
-              <span class="trending-item__tag">#дизайн</span>
-              <span class="trending-item__count">24 поста</span>
-            </li>
-            <li class="trending-item">
-              <span class="trending-item__tag">#технологии</span>
-              <span class="trending-item__count">18 постов</span>
-            </li>
-            <li class="trending-item">
-              <span class="trending-item__tag">#жизнь</span>
-              <span class="trending-item__count">12 постов</span>
-            </li>
-            <li class="trending-item">
-              <span class="trending-item__tag">#книги</span>
-              <span class="trending-item__count">9 постов</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="sidebar-card">
-          <h3 class="sidebar-card__title">Кого читать</h3>
-          <ul class="suggest-list">
-            <li class="suggest-item">
-              <div class="suggest-item__avatar" style="background:#FF6584">МС</div>
-              <div class="suggest-item__info">
-                <span class="suggest-item__name">Мария С.</span>
-                <span class="suggest-item__handle">@msveta</span>
-              </div>
-              <button class="btn-follow">+</button>
-            </li>
-            <li class="suggest-item">
-              <div class="suggest-item__avatar" style="background:#43B89C">ДК</div>
-              <div class="suggest-item__info">
-                <span class="suggest-item__name">Дмитрий К.</span>
-                <span class="suggest-item__handle">@dmitko</span>
-              </div>
-              <button class="btn-follow">+</button>
-            </li>
-          </ul>
+          <div class="stat-row">
+            <span class="stat-row__label">Лайков получено</span>
+            <span class="stat-row__val" id="myLikesCount">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-row__label">Подписчиков</span>
+            <span class="stat-row__val" id="myFollowers">0</span>
+          </div>
         </div>
       </aside>
 
     </div>
   </main>
 
-  <!-- ═══════════════════════════ MODAL ════════════════════════════ -->
-  <div class="modal-overlay" id="modalOverlay" role="dialog"
-       aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal" id="modal">
-      <div class="modal__header">
-        <h2 class="modal__title" id="modalTitle">Новая запись</h2>
-        <button class="modal__close" id="closeModalBtn" aria-label="Закрыть">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
+</div><!-- /appScreen -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     POST MODAL
+════════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="postModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__head">
+      <h2 class="modal__title">Новая запись</h2>
+      <button class="modal__close" id="closePostModal">✕</button>
+    </div>
+    <div class="modal__body">
+      <div class="post-author-row">
+        <div class="post-author-row__avatar" id="modalAvatar">🙂</div>
+        <div class="post-author-row__info">
+          <span class="post-author-row__name" id="modalName">—</span>
+          <span class="post-author-row__handle" id="modalHandle">—</span>
+        </div>
+      </div>
+      <div class="textarea-wrap">
+        <textarea class="post-textarea" id="postTextarea"
+                  placeholder="Поделитесь мыслью..."
+                  maxlength="1000" rows="5"></textarea>
+        <span class="char-counter"><span id="charCount">0</span>/1000</span>
+      </div>
+      <!-- Emoji toolbar -->
+      <div class="emoji-toolbar" id="emojiToolbar">
+        <!-- populated by JS -->
+      </div>
+    </div>
+    <div class="modal__foot">
+      <span class="modal__error" id="postError"></span>
+      <div class="modal__actions">
+        <button class="btn btn--ghost" id="cancelPostBtn">Отмена</button>
+        <button class="btn btn--primary" id="publishBtn" disabled>
+          <span id="publishBtnText">Опубликовать</span>
+          <span class="spinner hidden" id="publishSpinner"></span>
         </button>
-      </div>
-
-      <div class="modal__body">
-        <!-- Author info -->
-        <div class="post-form-author">
-          <div class="post-form-author__avatar" id="formAvatar" style="background:#6C63FF">МЫ</div>
-          <div class="post-form-author__info">
-            <input
-              type="text"
-              class="post-form-author__name"
-              id="inputName"
-              placeholder="Ваше имя"
-              value="Мой профиль"
-              maxlength="50"
-            />
-            <input
-              type="text"
-              class="post-form-author__handle"
-              id="inputHandle"
-              placeholder="@никнейм"
-              value="@me"
-              maxlength="30"
-            />
-          </div>
-        </div>
-
-        <!-- Textarea -->
-        <div class="textarea-wrapper">
-          <textarea
-            class="post-textarea"
-            id="postTextarea"
-            placeholder="Поделитесь мыслью, историей или идеей..."
-            maxlength="1000"
-            rows="5"
-          ></textarea>
-          <div class="char-counter">
-            <span id="charCount">0</span>/1000
-          </div>
-        </div>
-
-        <!-- Toolbar -->
-        <div class="post-form-toolbar">
-          <div class="post-form-toolbar__mood">
-            <button class="mood-btn" data-mood="💡" title="Идея">💡</button>
-            <button class="mood-btn" data-mood="🚀" title="Мотивация">🚀</button>
-            <button class="mood-btn" data-mood="💬" title="Мысль">💬</button>
-            <button class="mood-btn" data-mood="❤️" title="Чувство">❤️</button>
-            <button class="mood-btn" data-mood="✨" title="Вдохновение">✨</button>
-          </div>
-          <div class="post-form-toolbar__color-label">Цвет аватара:</div>
-          <div class="color-picker" id="colorPicker">
-            <button class="color-swatch active" data-color="#6C63FF" style="background:#6C63FF"></button>
-            <button class="color-swatch" data-color="#FF6584" style="background:#FF6584"></button>
-            <button class="color-swatch" data-color="#43B89C" style="background:#43B89C"></button>
-            <button class="color-swatch" data-color="#F7B731" style="background:#F7B731"></button>
-            <button class="color-swatch" data-color="#FC5C65" style="background:#FC5C65"></button>
-            <button class="color-swatch" data-color="#45AAF2" style="background:#45AAF2"></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal__footer">
-        <span class="modal__hint" id="modalHint"></span>
-        <div class="modal__actions">
-          <button class="btn btn--ghost" id="cancelBtn">Отмена</button>
-          <button class="btn btn--primary" id="submitBtn" disabled>
-            <span id="submitBtnText">Опубликовать</span>
-            <span class="spinner hidden" id="submitSpinner"></span>
-          </button>
-        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ═══════════════════════════ TOAST ════════════════════════════ -->
-  <div class="toast-container" id="toastContainer"></div>
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
 
-  <!-- ═══════════════════════════ SCROLL TOP ═══════════════════════ -->
-  <button class="scroll-top" id="scrollTopBtn" aria-label="Наверх">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2.5"
-         stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="18 15 12 9 6 15"/>
-    </svg>
-  </button>
+<!-- SCROLL TOP -->
+<button class="scroll-top hidden" id="scrollTop" aria-label="Наверх">↑</button>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
