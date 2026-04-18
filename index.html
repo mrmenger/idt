@@ -1,397 +1,376 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>итд.</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet" />
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════════════
-     AUTH SCREENS
-════════════════════════════════════════════════════════ -->
-<div class="auth-screen" id="authScreen">
-
-  <!-- Brand -->
+<!-- ══════════════════════════════════════════════
+     AUTH
+══════════════════════════════════════════════ -->
+<div id="authScreen" class="auth-screen">
   <div class="auth-brand">
-    <span class="auth-brand__logo">итд<span class="dot">.</span></span>
-    <p class="auth-brand__tagline">Место для мыслей</p>
+    <span class="auth-logo">итд<span class="dot">.</span></span>
+    <p class="auth-tagline">Место для мыслей</p>
   </div>
 
-  <!-- ── LOGIN PANEL ── -->
-  <div class="auth-panel" id="loginPanel">
-    <h2 class="auth-panel__title">Добро пожаловать</h2>
-    <p class="auth-panel__sub">Войдите в свой аккаунт</p>
-
-    <form class="auth-form" id="loginForm" novalidate>
+  <!-- LOGIN -->
+  <div id="loginPanel" class="auth-card">
+    <h2 class="auth-card__title">Добро пожаловать</h2>
+    <p  class="auth-card__sub">Войдите в аккаунт</p>
+    <form id="loginForm" class="auth-form" novalidate>
       <div class="field">
-        <label class="field__label" for="loginUsername">Логин</label>
-        <input class="field__input" id="loginUsername" type="text"
-               placeholder="your_login" autocomplete="username" />
-        <span class="field__error" id="loginUsernameErr"></span>
+        <label class="field__label">Логин</label>
+        <input id="li-username" class="field__input" type="text" placeholder="your_login" autocomplete="username"/>
+        <span  id="li-usernameErr" class="field__err"></span>
       </div>
-
       <div class="field">
-        <label class="field__label" for="loginPassword">Пароль</label>
-        <div class="field__pw-wrap">
-          <input class="field__input" id="loginPassword" type="password"
-                 placeholder="••••••••" autocomplete="current-password" />
-          <button type="button" class="pw-toggle" data-target="loginPassword"
-                  aria-label="Показать пароль">
-            <span class="pw-toggle__icon">👁</span>
-          </button>
+        <label class="field__label">Пароль</label>
+        <div class="pw-wrap">
+          <input id="li-password" class="field__input" type="password" placeholder="••••••••" autocomplete="current-password"/>
+          <button type="button" class="pw-eye" data-for="li-password">👁</button>
         </div>
-        <span class="field__error" id="loginPasswordErr"></span>
+        <span id="li-passwordErr" class="field__err"></span>
       </div>
-
-      <span class="field__error auth-error" id="loginError"></span>
-
+      <span id="loginErr" class="auth-err"></span>
       <button type="submit" class="btn btn--primary btn--full" id="loginBtn">
-        <span id="loginBtnText">Войти</span>
-        <span class="spinner hidden" id="loginSpinner"></span>
+        <span id="loginBtnTxt">Войти</span>
+        <span id="loginSpin" class="spinner hidden"></span>
       </button>
     </form>
-
-    <p class="auth-switch">
-      Нет аккаунта?
-      <button class="auth-switch__btn" id="toRegister">Зарегистрироваться</button>
-    </p>
+    <p class="auth-switch">Нет аккаунта? <button id="goRegister" class="link-btn">Зарегистрироваться</button></p>
   </div>
 
-  <!-- ── REGISTER PANEL ── -->
-  <div class="auth-panel hidden" id="registerPanel">
-    <h2 class="auth-panel__title">Создать аккаунт</h2>
-    <p class="auth-panel__sub">Это займёт меньше минуты</p>
+  <!-- REGISTER -->
+  <div id="registerPanel" class="auth-card hidden">
+    <h2 class="auth-card__title">Создать аккаунт</h2>
+    <p  class="auth-card__sub">Это займёт меньше минуты</p>
+    <form id="registerForm" class="auth-form" novalidate>
 
-    <form class="auth-form" id="registerForm" novalidate>
-
-      <!-- Step 1: Avatar -->
-      <div class="reg-step" id="regStep1">
-        <p class="reg-step__label">Выберите аватар-эмодзи</p>
-
-        <!-- Emoji grid -->
-        <div class="emoji-grid" id="emojiGrid">
-          <!-- populated by JS -->
-        </div>
-
-        <!-- Selected preview -->
-        <div class="emoji-preview">
-          <div class="emoji-preview__avatar" id="previewAvatar">🙂</div>
-          <span class="emoji-preview__hint">Ваш аватар</span>
-        </div>
-
-        <!-- Color for avatar bg -->
-        <div class="avatar-colors">
-          <span class="avatar-colors__label">Фон:</span>
-          <div class="avatar-colors__swatches" id="avatarColorSwatches">
-            <!-- populated by JS -->
+      <!-- STEP 1: emoji -->
+      <div id="regStep1" class="reg-step">
+        <p class="step-label">Выберите аватар-эмодзи</p>
+        <div id="emojiGrid" class="emoji-grid"></div>
+        <div class="emoji-preview-row">
+          <div id="previewBubble" class="avatar-bubble av-lg">😀</div>
+          <div class="emoji-preview-right">
+            <span class="step-label">Цвет фона</span>
+            <div id="colorSwatches" class="color-swatches"></div>
           </div>
         </div>
-
-        <button type="button" class="btn btn--primary btn--full" id="step1Next">
-          Далее →
-        </button>
+        <button type="button" id="step1Next" class="btn btn--primary btn--full">Далее →</button>
       </div>
 
-      <!-- Step 2: Credentials -->
-      <div class="reg-step hidden" id="regStep2">
-
-        <!-- Preview compact -->
-        <div class="reg-preview">
-          <div class="reg-preview__avatar" id="regPreviewAv">🙂</div>
-          <span class="reg-preview__change" id="backToStep1">Изменить</span>
+      <!-- STEP 2: credentials -->
+      <div id="regStep2" class="reg-step hidden">
+        <div class="step2-header">
+          <div id="step2AvatarPreview" class="avatar-bubble av-md">😀</div>
+          <button type="button" id="backStep1" class="link-btn">← Изменить аватар</button>
         </div>
 
         <div class="field">
-          <label class="field__label" for="regName">Отображаемое имя</label>
-          <input class="field__input" id="regName" type="text"
-                 placeholder="Иван Иванов" maxlength="40"
-                 autocomplete="name" />
-          <span class="field__error" id="regNameErr"></span>
+          <label class="field__label">Отображаемое имя</label>
+          <input id="re-name" class="field__input" type="text" placeholder="Иван Иванов" maxlength="40"/>
+          <span id="re-nameErr" class="field__err"></span>
         </div>
-
         <div class="field">
-          <label class="field__label" for="regUsername">Логин</label>
-          <div class="field__prefix-wrap">
+          <label class="field__label">Логин</label>
+          <div class="prefix-wrap">
             <span class="field__prefix">@</span>
-            <input class="field__input field__input--prefixed" id="regUsername"
-                   type="text" placeholder="ivan_ivanov" maxlength="20"
-                   autocomplete="username" />
+            <input id="re-username" class="field__input field__input--pfx" type="text" placeholder="ivan" maxlength="20"/>
           </div>
-          <span class="field__hint">Только латинские буквы, цифры, _</span>
-          <span class="field__error" id="regUsernameErr"></span>
+          <span class="field__hint">Только a-z, 0-9, _</span>
+          <span id="re-usernameErr" class="field__err"></span>
         </div>
-
         <div class="field">
-          <label class="field__label" for="regPassword">Пароль</label>
-          <div class="field__pw-wrap">
-            <input class="field__input" id="regPassword" type="password"
-                   placeholder="минимум 6 символов" maxlength="72"
-                   autocomplete="new-password" />
-            <button type="button" class="pw-toggle" data-target="regPassword"
-                    aria-label="Показать пароль">
-              <span class="pw-toggle__icon">👁</span>
-            </button>
+          <label class="field__label">Пароль</label>
+          <div class="pw-wrap">
+            <input id="re-password" class="field__input" type="password" placeholder="минимум 6 символов" maxlength="72"/>
+            <button type="button" class="pw-eye" data-for="re-password">👁</button>
           </div>
-          <!-- strength bar -->
-          <div class="pw-strength" id="pwStrength">
-            <div class="pw-strength__bar" id="pwStrengthBar"></div>
-          </div>
-          <span class="pw-strength__label" id="pwStrengthLabel"></span>
-          <span class="field__error" id="regPasswordErr"></span>
+          <div class="pw-bar"><div id="pwBarFill" class="pw-bar__fill"></div></div>
+          <span id="pwBarLabel" class="field__hint"></span>
+          <span id="re-passwordErr" class="field__err"></span>
         </div>
-
-        <span class="field__error auth-error" id="registerError"></span>
-
+        <span id="registerErr" class="auth-err"></span>
         <button type="submit" class="btn btn--primary btn--full" id="registerBtn">
-          <span id="registerBtnText">Создать аккаунт</span>
-          <span class="spinner hidden" id="registerSpinner"></span>
+          <span id="registerBtnTxt">Создать аккаунт</span>
+          <span id="registerSpin" class="spinner hidden"></span>
         </button>
       </div>
 
     </form>
-
-    <p class="auth-switch">
-      Уже есть аккаунт?
-      <button class="auth-switch__btn" id="toLogin">Войти</button>
-    </p>
+    <p class="auth-switch">Уже есть аккаунт? <button id="goLogin" class="link-btn">Войти</button></p>
   </div>
+</div>
 
-</div><!-- /authScreen -->
 
-
-<!-- ════════════════════════════════════════════════════════
-     APP SCREEN
-════════════════════════════════════════════════════════ -->
-<div class="app-screen hidden" id="appScreen">
+<!-- ══════════════════════════════════════════════
+     APP
+══════════════════════════════════════════════ -->
+<div id="appScreen" class="app-screen hidden">
 
   <!-- HEADER -->
-  <header class="header" id="header">
-    <div class="header__inner container">
+  <header id="appHeader" class="app-header">
+    <div class="app-header__inner container">
+      <button class="logo" id="goFeed">итд<span class="dot">.</span></button>
 
-      <a href="#" class="logo" id="goHome">
-        <span class="logo__text">итд</span><span class="logo__dot">.</span>
-      </a>
-
-      <nav class="nav" id="mainNav">
-        <button class="nav__link nav__link--active" data-page="feed">Лента</button>
-        <button class="nav__link" data-page="people">Люди</button>
+      <nav class="top-nav">
+        <button class="top-nav__btn active" data-page="feed">Лента</button>
+        <button class="top-nav__btn" data-page="people">Люди</button>
+        <button class="top-nav__btn" data-page="messages">
+          Сообщения
+          <span id="unreadBadge" class="badge hidden">0</span>
+        </button>
       </nav>
 
-      <div class="header__right">
-        <button class="btn btn--primary btn--sm" id="headerPostBtn">
-          + Написать
-        </button>
-        <!-- User menu -->
-        <div class="user-menu" id="userMenu">
-          <button class="user-menu__trigger" id="userMenuTrigger">
-            <div class="user-menu__avatar" id="headerAvatar">🙂</div>
+      <div class="header-right">
+        <button class="btn btn--primary btn--sm" id="hdrPostBtn">+ Написать</button>
+        <div class="avatar-menu" id="avatarMenu">
+          <button class="avatar-menu__trigger" id="avatarMenuBtn">
+            <div id="hdrAvatar" class="avatar-bubble av-sm">😀</div>
           </button>
-          <div class="user-menu__dropdown" id="userMenuDropdown">
-            <div class="user-menu__info">
-              <span class="user-menu__name" id="menuDisplayName">—</span>
-              <span class="user-menu__handle" id="menuHandle">—</span>
+          <div id="avatarMenuDrop" class="avatar-menu__drop">
+            <div class="avatar-menu__info">
+              <span id="hdrName"   class="avatar-menu__name">—</span>
+              <span id="hdrHandle" class="avatar-menu__handle">—</span>
             </div>
-            <div class="user-menu__divider"></div>
-            <button class="user-menu__item" id="logoutBtn">
-              🚪 Выйти
-            </button>
+            <div class="divider"></div>
+            <button class="avatar-menu__item" data-page="profile" id="goProfileBtn">👤 Мой профиль</button>
+            <button class="avatar-menu__item" id="logoutBtn">🚪 Выйти</button>
           </div>
         </div>
       </div>
-
     </div>
   </header>
 
   <!-- MAIN -->
-  <main class="main">
+  <main class="app-main">
     <div class="container layout">
 
       <!-- LEFT SIDEBAR -->
-      <aside class="sidebar sidebar--left">
-        <div class="sidebar-card profile-card" id="sideProfile">
-          <div class="profile-card__avatar" id="sideAvatar">🙂</div>
-          <div class="profile-card__name" id="sideName">—</div>
-          <div class="profile-card__handle" id="sideHandle">—</div>
-          <div class="profile-card__stats">
-            <div class="profile-stat">
-              <span class="profile-stat__val" id="sidePostCount">0</span>
-              <span class="profile-stat__label">постов</span>
-            </div>
-            <div class="profile-stat">
-              <span class="profile-stat__val" id="sideFollowers">0</span>
-              <span class="profile-stat__label">читателей</span>
-            </div>
-            <div class="profile-stat">
-              <span class="profile-stat__val" id="sideFollowing">0</span>
-              <span class="profile-stat__label">подписок</span>
-            </div>
+      <aside class="sidebar sidebar--l">
+        <div class="sidebar-card profile-widget" id="sideProfileWidget">
+          <div id="sideAvatar" class="avatar-bubble av-xl">😀</div>
+          <div id="sideName"   class="profile-widget__name">—</div>
+          <div id="sideHandle" class="profile-widget__handle">—</div>
+          <div class="profile-widget__stats">
+            <div class="pstat"><span id="sidePostCnt" class="pstat__v">0</span><span class="pstat__l">постов</span></div>
+            <div class="pstat"><span id="sideFollCnt" class="pstat__v">0</span><span class="pstat__l">читателей</span></div>
+            <div class="pstat"><span id="sideFingCnt" class="pstat__v">0</span><span class="pstat__l">подписок</span></div>
           </div>
         </div>
 
         <nav class="side-nav">
-          <button class="side-nav__item side-nav__item--active" data-page="feed">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"/>
-            </svg>
+          <button class="side-nav__btn active" data-page="feed">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             Лента
           </button>
-          <button class="side-nav__item" data-page="people">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 00-3-3.87"/>
-              <path d="M16 3.13a4 4 0 010 7.75"/>
-            </svg>
+          <button class="side-nav__btn" data-page="people">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
             Люди
+          </button>
+          <button class="side-nav__btn" data-page="messages">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            Сообщения
+            <span id="sideUnread" class="badge hidden">0</span>
+          </button>
+          <button class="side-nav__btn" data-page="profile">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            Профиль
           </button>
         </nav>
 
-        <button class="btn btn--primary btn--full" id="sidePostBtn">
-          + Опубликовать
-        </button>
+        <button class="btn btn--primary btn--full" id="sidePostBtn">+ Опубликовать</button>
       </aside>
 
-      <!-- FEED PAGE -->
-      <section class="page" id="feedPage">
+      <!-- PAGES -->
+      <div class="pages-wrap">
 
-        <!-- Quick compose -->
-        <div class="quick-compose" id="quickCompose">
-          <div class="quick-compose__avatar" id="quickAvatar">🙂</div>
-          <button class="quick-compose__input" id="quickTrigger">
-            Что у вас нового?..
-          </button>
-        </div>
+        <!-- FEED -->
+        <section id="feedPage" class="page">
+          <div class="quick-bar" id="quickBar">
+            <div id="qbAvatar" class="avatar-bubble av-sm">😀</div>
+            <button id="quickTrigger" class="quick-bar__input">Что у вас нового?</button>
+          </div>
+          <div id="skeletons" class="skeletons">
+            <div class="sk-card"><div class="sk sk-circle"></div><div class="sk-lines"><div class="sk sk-ln sk-sh"></div><div class="sk sk-ln"></div><div class="sk sk-ln sk-md"></div></div></div>
+            <div class="sk-card"><div class="sk sk-circle"></div><div class="sk-lines"><div class="sk sk-ln sk-sh"></div><div class="sk sk-ln"></div><div class="sk sk-ln sk-md"></div></div></div>
+          </div>
+          <div id="postsList"></div>
+          <div id="feedEmpty" class="empty-state hidden">
+            <div class="empty-state__icon">✍️</div>
+            <h3>Пока пусто</h3>
+            <p>Будьте первым — поделитесь мыслью!</p>
+            <button class="btn btn--primary" id="emptyPostBtn">Написать</button>
+          </div>
+        </section>
 
-        <!-- Skeletons -->
-        <div id="skeletons">
-          <div class="skeleton-card">
-            <div class="skeleton sk-circle"></div>
-            <div class="sk-lines">
-              <div class="skeleton sk-line sk-short"></div>
-              <div class="skeleton sk-line"></div>
-              <div class="skeleton sk-line sk-med"></div>
+        <!-- PEOPLE -->
+        <section id="peoplePage" class="page hidden">
+          <div class="page-header">
+            <h2 class="page-header__title">Люди</h2>
+            <input id="peopleSearch" class="search-input" type="text" placeholder="🔍  Поиск..."/>
+          </div>
+          <div id="peopleList"></div>
+          <div id="peopleEmpty" class="empty-state hidden">
+            <div class="empty-state__icon">👥</div>
+            <h3>Никого нет</h3>
+            <p>Вы единственный пользователь пока что</p>
+          </div>
+        </section>
+
+        <!-- MESSAGES -->
+        <section id="messagesPage" class="page hidden">
+          <div class="msgs-layout">
+            <!-- Inbox list -->
+            <div class="inbox-panel" id="inboxPanel">
+              <div class="page-header">
+                <h2 class="page-header__title">Сообщения</h2>
+              </div>
+              <div id="inboxList"></div>
+              <div id="inboxEmpty" class="empty-state hidden">
+                <div class="empty-state__icon">💬</div>
+                <h3>Нет диалогов</h3>
+                <p>Напишите кому-нибудь первым!</p>
+              </div>
+            </div>
+            <!-- Chat -->
+            <div class="chat-panel hidden" id="chatPanel">
+              <div class="chat-header" id="chatHeader">
+                <button class="chat-back" id="chatBack">←</button>
+                <div id="chatPartnerAvatar" class="avatar-bubble av-sm">😀</div>
+                <div class="chat-header__info">
+                  <span id="chatPartnerName"   class="chat-header__name">—</span>
+                  <span id="chatPartnerHandle" class="chat-header__handle">—</span>
+                </div>
+              </div>
+              <div class="chat-messages" id="chatMessages"></div>
+              <div class="chat-compose">
+                <textarea id="chatInput" class="chat-input" placeholder="Написать сообщение..." rows="1" maxlength="2000"></textarea>
+                <button class="btn btn--primary btn--sm" id="chatSendBtn">↑</button>
+              </div>
             </div>
           </div>
-          <div class="skeleton-card">
-            <div class="skeleton sk-circle"></div>
-            <div class="sk-lines">
-              <div class="skeleton sk-line sk-short"></div>
-              <div class="skeleton sk-line"></div>
-              <div class="skeleton sk-line sk-med"></div>
+        </section>
+
+        <!-- PROFILE -->
+        <section id="profilePage" class="page hidden">
+          <!-- Profile header card -->
+          <div class="profile-header-card" id="profileHeaderCard">
+            <div class="profile-header-card__top">
+              <div id="profileAvatar" class="avatar-bubble av-xxl">😀</div>
+              <div class="profile-header-card__actions" id="profileActions">
+                <!-- filled by JS -->
+              </div>
+            </div>
+            <div id="profileName"   class="profile-hc__name">—</div>
+            <div id="profileHandle" class="profile-hc__handle">—</div>
+            <div id="profileBio"    class="profile-hc__bio"></div>
+            <div class="profile-hc__stats">
+              <div class="pstat"><span id="profilePostCnt"   class="pstat__v">0</span><span class="pstat__l">постов</span></div>
+              <div class="pstat"><span id="profileFollCnt"   class="pstat__v">0</span><span class="pstat__l">читателей</span></div>
+              <div class="pstat"><span id="profileFingCnt"   class="pstat__v">0</span><span class="pstat__l">подписок</span></div>
             </div>
           </div>
-        </div>
 
-        <!-- Posts -->
-        <div id="postsList"></div>
+          <!-- Edit profile form (own) -->
+          <div id="editProfileCard" class="sidebar-card hidden">
+            <h3 class="sidebar-card__title">Редактировать профиль</h3>
+            <div class="edit-avatar-row">
+              <div id="editAvatarPreview" class="avatar-bubble av-lg">😀</div>
+              <div class="edit-avatar-controls">
+                <div id="editEmojiGrid" class="emoji-grid emoji-grid--sm"></div>
+              </div>
+            </div>
+            <div class="edit-colors" id="editColorSwatches"></div>
+            <div class="field">
+              <label class="field__label">Имя</label>
+              <input id="editName" class="field__input" type="text" maxlength="40"/>
+            </div>
+            <div class="field">
+              <label class="field__label">О себе</label>
+              <textarea id="editBio" class="field__input" rows="3" maxlength="200" placeholder="Расскажите о себе..."></textarea>
+            </div>
+            <div class="edit-form-actions">
+              <button class="btn btn--ghost" id="cancelEditBtn">Отмена</button>
+              <button class="btn btn--primary" id="saveProfileBtn">Сохранить</button>
+            </div>
+          </div>
 
-        <!-- Empty -->
-        <div class="empty-state hidden" id="feedEmpty">
-          <div class="empty-state__icon">✍️</div>
-          <h3>Пока пусто</h3>
-          <p>Станьте первым — поделитесь своей мыслью!</p>
-          <button class="btn btn--primary" id="emptyPostBtn">Написать</button>
-        </div>
+          <!-- User's posts -->
+          <div id="profilePostsList"></div>
+          <div id="profilePostsEmpty" class="empty-state hidden">
+            <div class="empty-state__icon">📝</div>
+            <h3>Нет постов</h3>
+            <p>Здесь пока ничего нет</p>
+          </div>
+        </section>
 
-      </section>
-
-      <!-- PEOPLE PAGE -->
-      <section class="page hidden" id="peoplePage">
-        <div class="people-header">
-          <h2 class="people-header__title">Люди</h2>
-          <input class="people-search" id="peopleSearch"
-                 type="text" placeholder="🔍  Поиск..." />
-        </div>
-
-        <div id="peopleList"></div>
-
-        <div class="empty-state hidden" id="peopleEmpty">
-          <div class="empty-state__icon">👥</div>
-          <h3>Никого нет</h3>
-          <p>Пока вы единственный пользователь</p>
-        </div>
-      </section>
+      </div><!-- /pages-wrap -->
 
       <!-- RIGHT SIDEBAR -->
-      <aside class="sidebar sidebar--right">
+      <aside class="sidebar sidebar--r">
         <div class="sidebar-card">
           <h3 class="sidebar-card__title">Моя статистика</h3>
-          <div class="stat-row">
-            <span class="stat-row__label">Постов</span>
-            <span class="stat-row__val" id="myPostCount">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-row__label">Лайков получено</span>
-            <span class="stat-row__val" id="myLikesCount">0</span>
-          </div>
-          <div class="stat-row">
-            <span class="stat-row__label">Подписчиков</span>
-            <span class="stat-row__val" id="myFollowers">0</span>
-          </div>
+          <div class="stat-row"><span class="stat-row__l">Постов</span><span id="rsPostCnt" class="stat-row__v">0</span></div>
+          <div class="stat-row"><span class="stat-row__l">Лайков</span><span id="rsLikesCnt" class="stat-row__v">0</span></div>
+          <div class="stat-row"><span class="stat-row__l">Подписчиков</span><span id="rsFollCnt" class="stat-row__v">0</span></div>
         </div>
       </aside>
 
     </div>
   </main>
+</div>
 
-</div><!-- /appScreen -->
 
-
-<!-- ════════════════════════════════════════════════════════
+<!-- ══════════════════════════════════════════════
      POST MODAL
-════════════════════════════════════════════════════════ -->
-<div class="modal-overlay hidden" id="postModal" role="dialog" aria-modal="true">
+══════════════════════════════════════════════ -->
+<div id="postModal" class="modal-overlay hidden">
   <div class="modal">
     <div class="modal__head">
       <h2 class="modal__title">Новая запись</h2>
-      <button class="modal__close" id="closePostModal">✕</button>
+      <button id="closePostModal" class="modal__close">✕</button>
     </div>
     <div class="modal__body">
       <div class="post-author-row">
-        <div class="post-author-row__avatar" id="modalAvatar">🙂</div>
-        <div class="post-author-row__info">
-          <span class="post-author-row__name" id="modalName">—</span>
-          <span class="post-author-row__handle" id="modalHandle">—</span>
+        <div id="modalAvatar" class="avatar-bubble av-md">😀</div>
+        <div>
+          <span id="modalName"   class="fw-bold d-block">—</span>
+          <span id="modalHandle" class="text-muted fs-sm">—</span>
         </div>
       </div>
       <div class="textarea-wrap">
-        <textarea class="post-textarea" id="postTextarea"
-                  placeholder="Поделитесь мыслью..."
-                  maxlength="1000" rows="5"></textarea>
+        <textarea id="postTextarea" class="post-textarea" placeholder="Поделитесь мыслью..." maxlength="1000" rows="5"></textarea>
         <span class="char-counter"><span id="charCount">0</span>/1000</span>
       </div>
-      <!-- Emoji toolbar -->
-      <div class="emoji-toolbar" id="emojiToolbar">
-        <!-- populated by JS -->
-      </div>
+      <div id="postEmojiBar" class="emoji-bar"></div>
     </div>
     <div class="modal__foot">
-      <span class="modal__error" id="postError"></span>
+      <span id="postError" class="modal__error"></span>
       <div class="modal__actions">
-        <button class="btn btn--ghost" id="cancelPostBtn">Отмена</button>
+        <button class="btn btn--ghost" id="cancelPost">Отмена</button>
         <button class="btn btn--primary" id="publishBtn" disabled>
-          <span id="publishBtnText">Опубликовать</span>
-          <span class="spinner hidden" id="publishSpinner"></span>
+          <span id="publishTxt">Опубликовать</span>
+          <span id="publishSpin" class="spinner hidden"></span>
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
-<div class="toast-container" id="toastContainer"></div>
+<!-- TOASTS -->
+<div id="toastBox" class="toast-box"></div>
 
 <!-- SCROLL TOP -->
-<button class="scroll-top hidden" id="scrollTop" aria-label="Наверх">↑</button>
+<button id="scrollTopBtn" class="scroll-top hidden" aria-label="Наверх">↑</button>
 
 <script src="script.js"></script>
 </body>
